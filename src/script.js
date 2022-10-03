@@ -1,5 +1,6 @@
 import './style.css'
 import * as T from 'three'
+import gsap from 'gsap';
 
 //SCene
 const scene = new T.Scene();
@@ -27,4 +28,36 @@ const renderer = new T.WebGLRenderer({
 })
 
 renderer.setSize(sizes.width, sizes.height)
-renderer.render(scene, camera)
+
+//Clock
+const clock = new T.Clock();
+
+//using gsap
+gsap.to(mesh.position, {
+    x:2,
+    duration: 1,
+    delay:1
+})
+
+//Animations
+const tick = () => {
+    
+    const elapsedTime = clock.getElapsedTime()
+
+    //Update mesh positions/rotations
+    // mesh.position.x += 0.02
+    // mesh.rotation.y = elapsedTime * (Math.PI * 2 /*one full rotation */) //rotate once per second
+    // mesh.position.y = Math.sin(elapsedTime)
+    // mesh.position.x = Math.cos(elapsedTime)
+    
+    //Update camera positions
+    // camera.position.y = Math.sin(elapsedTime)
+    // camera.position.x = Math.cos(elapsedTime)
+    // camera.lookAt(mesh.position)
+
+    //Render
+    renderer.render(scene, camera)
+    window.requestAnimationFrame(tick)
+}
+
+tick()
