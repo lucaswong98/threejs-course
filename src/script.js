@@ -4,11 +4,35 @@ import * as T from 'three'
 //SCene
 const scene = new T.Scene();
 
+const axesHelper = new T.AxesHelper(2)
+scene.add(axesHelper)
+
+//Group
+const group = new T.Group();
+group.position.y = 1
+group.scale.y = 2
+group.rotation.y = 1
+scene.add(group);
+
 //Object
-const geometry = new T.BoxGeometry(1,1,1);
-const material = new T.MeshBasicMaterial({color: 0xff0000})
-const mesh = new T.Mesh(geometry, material)
-scene.add(mesh)
+const cube1 = new T.Mesh(
+    new T.BoxGeometry(1, 1, 1),
+    new T.MeshBasicMaterial({ color: 0xff0000 })
+)
+const cube2 = new T.Mesh(
+    new T.BoxGeometry(1, 1, 1),
+    new T.MeshBasicMaterial({ color: 0x00ff00 })
+)
+cube2.position.x = -2
+const cube3 = new T.Mesh(
+    new T.BoxGeometry(1, 1, 1),
+    new T.MeshBasicMaterial({ color: 0x0000ff })
+)
+cube3.position.x = 2
+
+group.add(cube1);
+group.add(cube2);
+group.add(cube3);
 
 //Sizes
 const sizes = {
@@ -17,9 +41,11 @@ const sizes = {
 }
 
 //Camera
-const camera = new T.PerspectiveCamera(75, sizes.width/sizes.height)
+const camera = new T.PerspectiveCamera(75, sizes.width / sizes.height)
+// camera.position.set(1,1,5)
 camera.position.z = 3
 scene.add(camera)
+
 
 //Renderer
 const renderer = new T.WebGLRenderer({
