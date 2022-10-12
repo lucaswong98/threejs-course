@@ -1,6 +1,19 @@
 import './style.css'
 import * as T from 'three'
 
+/*
+    Cursor
+*/
+const cursor = {
+    x: 0,
+    y: 0
+}
+window.addEventListener('mousemove', (event) => {
+    cursor.x = event.clientX / sizes.width - 0.5
+    cursor.y = - (event.clientY / sizes.height - 0.5)
+
+})
+
 //SCene
 const scene = new T.Scene();
 
@@ -51,8 +64,11 @@ const tick = () => {
     
     const elapsedTime = clock.getElapsedTime()
 
-    //Update mesh positions/rotations
-    // mesh.rotation.y = elapsedTime 
+    //Update camera
+    camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 3
+    camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 3
+    camera.position.y = cursor.y * 5
+    camera.lookAt(mesh.position)
 
     //Render
     renderer.render(scene, camera)
