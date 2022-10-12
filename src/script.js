@@ -1,6 +1,5 @@
 import './style.css'
 import * as T from 'three'
-import gsap from 'gsap';
 
 //SCene
 const scene = new T.Scene();
@@ -18,8 +17,23 @@ const sizes = {
 }
 
 //Camera
-const camera = new T.PerspectiveCamera(75, sizes.width/sizes.height)
+//Perspective Camera
+const camera = new T.PerspectiveCamera(100, sizes.width/sizes.height, 0.1, 100)
+
+//Orthographic Camera
+// const aspectRatio = sizes.width/sizes.height;
+// const orthCam = {
+//     left: -1 * aspectRatio,
+//     right: 1 * aspectRatio,
+//     top: -1,
+//     bottom: 1,
+// }
+// const camera = new T.OrthographicCamera(orthCam.left, orthCam.right, orthCam.top, orthCam.bottom, 0.1, 100)
+
+// camera.position.x = 2
+// camera.position.y = 2
 camera.position.z = 3
+camera.lookAt(mesh.position)
 scene.add(camera)
 
 //Renderer
@@ -32,28 +46,13 @@ renderer.setSize(sizes.width, sizes.height)
 //Clock
 const clock = new T.Clock();
 
-//using gsap
-gsap.to(mesh.position, {
-    x:2,
-    duration: 1,
-    delay:1
-})
-
 //Animations
 const tick = () => {
     
     const elapsedTime = clock.getElapsedTime()
 
     //Update mesh positions/rotations
-    // mesh.position.x += 0.02
-    // mesh.rotation.y = elapsedTime * (Math.PI * 2 /*one full rotation */) //rotate once per second
-    // mesh.position.y = Math.sin(elapsedTime)
-    // mesh.position.x = Math.cos(elapsedTime)
-    
-    //Update camera positions
-    // camera.position.y = Math.sin(elapsedTime)
-    // camera.position.x = Math.cos(elapsedTime)
-    // camera.lookAt(mesh.position)
+    // mesh.rotation.y = elapsedTime 
 
     //Render
     renderer.render(scene, camera)
